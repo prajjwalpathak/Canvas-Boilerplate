@@ -11,11 +11,6 @@ window.addEventListener("resize", () => {
   init();
 });
 
-// Random function
-const getRandom = (min, max) => {
-  return Math.random() * (max - min) + min;
-};
-
 const init = () => {
   // Your code
 };
