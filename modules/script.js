@@ -1,4 +1,3 @@
-const PI = 22 / 7;
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -28,6 +27,8 @@ const rotate = (velocity, angle) => {
   return rotatedVelocities;
 };
 
+/* Rotate the axis by contact angle, apply 1-D elastic collision equation,
+rotate back the axis to it's original angle */
 // Collision Resolution
 const resolveCollision = (bubble, otherBubble) => {
   let xVelocityDiff = bubble.velocity.x - otherBubble.velocity.x;
@@ -85,3 +86,7 @@ const animate = () => {
 
 // Call animate()
 animate();
+
+/* To do:
+ -> Collision detection for rectangular objects
+ -> Optimise collision detection and resolution */
