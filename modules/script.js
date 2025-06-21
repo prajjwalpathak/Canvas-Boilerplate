@@ -89,4 +89,6 @@ animate();
 
 /* To do:
  -> Collision detection for rectangular objects
- -> Optimise collision detection and resolution */
+ -> Optimise collision detection and resolution
+ -> Add acceleration and friction
+ -> Image and animation */
