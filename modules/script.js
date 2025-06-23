@@ -1,5 +1,5 @@
 const canvas = document.querySelector("canvas");
-const c = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -13,9 +13,9 @@ window.addEventListener("resize", () => {
 // For Circular collision
 
 // Collision Detection
-const isColliding = (bubble, otherBubble) => {
-  let distance = getDistance(bubble.x, bubble.y, otherBubble.x, otherBubble.y);
-  return distance <= bubble.radius + otherBubble.radius;
+const isColliding = (circle, otherCircle) => {
+  let distance = getDistance(circle.x, circle.y, otherCircle.x, otherCircle.y);
+  return distance <= circle.radius + otherCircle.radius;
 };
 
 // Rotate Function
@@ -30,23 +30,23 @@ const rotate = (velocity, angle) => {
 /* Rotate the axis by contact angle, apply 1-D elastic collision equation,
 rotate back the axis to it's original angle */
 // Collision Resolution
-const resolveCollision = (bubble, otherBubble) => {
-  let xVelocityDiff = bubble.velocity.x - otherBubble.velocity.x;
-  let yVelocityDiff = bubble.velocity.y - otherBubble.velocity.y;
+const resolveCollision = (circle, otherCircle) => {
+  let xVelocityDiff = circle.velocity.x - otherCircle.velocity.x;
+  let yVelocityDiff = circle.velocity.y - otherCircle.velocity.y;
 
-  let xDistance = otherBubble.x - bubble.x;
-  let yDistance = otherBubble.y - bubble.y;
+  let xDistance = otherCircle.x - circle.x;
+  let yDistance = otherCircle.y - circle.y;
 
   // prevent accidental overlap of bubbles
   if (xVelocityDiff * xDistance + yVelocityDiff * yDistance >= 0) {
     // angle between the two colliding bubbles
     let angle = -Math.atan2(yDistance, xDistance);
-    let m1 = bubble.mass;
-    let m2 = otherBubble.mass;
+    let m1 = circle.mass;
+    let m2 = otherCircle.mass;
 
     // velocity before collision
-    let u1 = rotate(bubble.velocity, angle);
-    let u2 = rotate(otherBubble.velocity, angle);
+    let u1 = rotate(circle.velocity, angle);
+    let u2 = rotate(otherCircle.velocity, angle);
 
     // velocity after 1-D collision
     let v1 = {
@@ -62,11 +62,11 @@ const resolveCollision = (bubble, otherBubble) => {
     let v1Final = rotate(v1, -angle);
     let v2Final = rotate(v2, -angle);
 
-    bubble.velocity.x = v1Final.x;
-    bubble.velocity.y = v1Final.y;
+    circle.velocity.x = v1Final.x;
+    circle.velocity.y = v1Final.y;
 
-    otherBubble.velocity.x = v2Final.x;
-    otherBubble.velocity.y = v2Final.y;
+    otherCircle.velocity.x = v2Final.x;
+    otherCircle.velocity.y = v2Final.y;
   }
 };
 
@@ -80,15 +80,16 @@ init();
 // Animate function
 const animate = () => {
   requestAnimationFrame(animate);
-  // c.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  // ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   // Your code
 };
 
 // Call animate()
 animate();
 
-/* To do:
+/*  To do:
  -> Collision detection for rectangular objects
  -> Optimise collision detection and resolution
  -> Add acceleration and friction
- -> Image and animation */
+ -> Image and animation
+ -> Add more Physics features */
